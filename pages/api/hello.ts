@@ -1,13 +1,16 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type Data = {
-  name: string;
+type JsonResponse = {
+  message: string;
+  data?: any;
 };
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<JsonResponse>
 ) {
-  res.status(200).json({ name: "John Doe" });
+  res.status(403).json({
+    message: "You are not allowed to access this resource",
+  });
 }
