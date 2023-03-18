@@ -14,15 +14,34 @@ import React from "react";
 export default function Login() {
   const [hasSchoolEmail, setHasSchoolEmail] = React.useState(true);
   const [validated, setValidated] = React.useState(false);
+  const [formValues, setFormValues] = React.useState({
+    name: "",
+    dateOfBirth: "",
+    schoolEmail: "",
+    email: "",
+    proofOfAcademicStatus: "",
+  });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
+    event.preventDefault();
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
-    }
+    } else {
+      console.log(formValues);
+      (async () => {
+        // POST formValues to /api/register
+        const request = await fetch("/api/register", {
+          method: "POST",
+          body: JSON.stringify(formValues),
+        });
 
-    setValidated(true);
+        if (request.status === 200) {
+          // Redirect to /login
+          window.location.href = "/login";
+        }
+      })();
+    }
   };
 
   return (
@@ -33,13 +52,19 @@ export default function Login() {
             <Card.Title>
               <h5>Register</h5>
             </Card.Title>
-            <Form noValidate validated={validated} onSubmit={handleSubmit} method="POST" action="/api/register">
-              <Form.Group as={Row} className="mb-3" controlId="fullName">
+            <Form
+              noValidate
+              validated={validated}
+              onSubmit={handleSubmit}
+              method="POST"
+              action="/api/register"
+            >
+              <Form.Group as={Row} className="mb-3" controlId="name">
                 <Form.Label column md="4" className="required">
                   Full Name
                 </Form.Label>
                 <Col span="8">
-                  <Form.Control placeholder="John Doe" required />
+                  <Form.Control placeholder="John Doe" required onChange={(e) => setFormValues({...formValues, name: e.target.value})} />
                   <Form.Control.Feedback type="invalid">
                     Please enter your name.
                   </Form.Control.Feedback>
@@ -51,7 +76,7 @@ export default function Login() {
                   Date of Birth
                 </Form.Label>
                 <Col md="4">
-                  <Form.Control type="date" required />
+                  <Form.Control type="date" required onChange={(e) => setFormValues({...formValues, dateOfBirth: e.target.value})} />
                   <Form.Control.Feedback type="invalid">
                     Please enter your date of birth.
                   </Form.Control.Feedback>
@@ -83,6 +108,7 @@ export default function Login() {
                     placeholder="id@school.edu"
                     disabled={!hasSchoolEmail}
                     required={hasSchoolEmail}
+                    onChange={(e) => setFormValues({...formValues, schoolEmail: e.target.value})}
                   />
                   <Form.Control.Feedback type="invalid">
                     Please enter your school email.
@@ -101,12 +127,17 @@ export default function Login() {
                 </Col>
               </Form.Group>
 
-              <Form.Group as={Row} className="mb-3" controlId="personalEmail">
+              <Form.Group as={Row} className="mb-3" controlId="email">
                 <Form.Label column md="4" className="required">
                   Personal Email
                 </Form.Label>
                 <Col md="8">
-                  <Form.Control type="email" placeholder="email@example.com" required />
+                  <Form.Control
+                    type="email"
+                    placeholder="email@example.com"
+                    required
+                    onChange={(e) => setFormValues({...formValues, email: e.target.value})}
+                  />
                   <Form.Control.Feedback type="invalid">
                     Please enter your personal email.
                   </Form.Control.Feedback>
@@ -139,7 +170,7 @@ export default function Login() {
                   </OverlayTrigger>
                 </Form.Label>
                 <Col md="8">
-                  <Form.Control type="file" required />
+                  <Form.Control type="file" required onChange={(e) => setFormValues({...formValues, proofOfAcademicStatus: e.target.value})} />
                   <Form.Control.Feedback type="invalid">
                     Please upload a proof of your academic status.
                   </Form.Control.Feedback>
