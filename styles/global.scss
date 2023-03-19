@@ -1,0 +1,22 @@
+.required::after {
+    content: " *";
+    color: red;
+}
+
+.required-if-true::after {
+    content: " *";
+    color: orange;
+}
+
+// include bootstrap variables
+@import "~bootstrap/scss/bootstrap";
+
+.bg-user-dropdown {
+    background-color: $primary;
+    color: $light;
+
+    @include media-breakpoint-up(md) {
+        background-color: $light;
+        color: $dark;
+    }
+}

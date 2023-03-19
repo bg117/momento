@@ -48,7 +48,7 @@ export default function Login() {
                 <Form.Label
                   column
                   md="4"
-                  className="d-flex align-items-center required"
+                  className="required"
                 >
                   User ID
                 </Form.Label>
@@ -74,7 +74,7 @@ export default function Login() {
                 <Form.Label
                   column
                   md="4"
-                  className="d-flex align-items-center required"
+                  className="required"
                 >
                   Password
                 </Form.Label>
