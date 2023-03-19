@@ -6,7 +6,7 @@ export default function Page(props: any) {
   return (
     <>
       <Header />
-      <Container className={`pt-4 page ${className ? className : ""}`}>{props.children}</Container>
+      <Container className={`pt-4 border-start border-end page ${className ? className : ""}`}>{props.children}</Container>
     </>
   );
 }

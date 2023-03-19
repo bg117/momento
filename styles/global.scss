@@ -1,22 +1,25 @@
 .required::after {
-    content: " *";
-    color: red;
+  content: " *";
+  color: red;
 }
 
 .required-if-true::after {
-    content: " *";
-    color: orange;
+  content: " *";
+  color: orange;
 }
 
-// include bootstrap variables
-@import "~bootstrap/scss/bootstrap";
+html,
+body,
+#__next,
+#__next > main {
+  height: 100%;
+}
 
-.bg-user-dropdown {
-    background-color: $primary;
-    color: $light;
+#__next > main {
+  display: flex;
+  flex-direction: column;
+}
 
-    @include media-breakpoint-up(md) {
-        background-color: $light;
-        color: $dark;
-    }
+#__next > main > .container:nth-child(2) {
+  flex: 1;
 }
